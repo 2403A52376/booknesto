@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BOOKNEST — a curated online bookstore.">
+  <title>BOOKNEST | Discover Your Next Chapter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="announcement">
+    Complimentary bookmarks on every order · Free shipping above ₹999
+  </div>
+
+  <header class="navbar">
+    <a href="#" class="logo" onclick="showPage('home')">
+      BOOK<span>NEST</span><small>THE ART OF READING</small>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('shop')">Shop</a>
+      <a href="#" onclick="filterCategory('Fiction')">Fiction</a>
+      <a href="#" onclick="filterCategory('Self Help')">Self Help</a>
+      <a href="#" onclick="showPage('shop')">Discover</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="showPage('shop')" title="Search">⌕</button>
+      <button class="icon-btn" onclick="showPage('wishlist')" title="Wishlist">♡</button>
+      <button class="icon-btn" onclick="showPage('account')" title="Account">♙</button>
+      <button class="cart-btn" onclick="showPage('cart')">
+        Bag <span id="cartCount">0</span>
+      </button>
+      <button class="menu-toggle" onclick="toggleMobileMenu()">☰</button>
+    </div>
+  </header>
+
+  <main id="storefront">
+
+    <section id="homePage" class="page active">
+      <div class="hero">
+        <div class="hero-content">
+          <p class="eyebrow">A WORLD BETWEEN THE COVERS</p>
+          <h1>Find your next<br><em>great escape.</em></h1>
+          <p class="hero-description">
+            Stories that inspire, ideas that transform, and books
+            that stay with you long after the last page.
+          </p>
+          <button class="primary-btn" onclick="showPage('shop')">
+            Explore the collection →
+          </button>
+          <div class="hero-note">Curated with love · Delivered with care</div>
+        </div>
+
+        <div class="hero-image">
+          <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1000" alt="Beautiful library">
+          <div class="hero-floating">
+            <span>THE READING LIST</span>
+            <strong>Your next favourite is waiting.</strong>
+          </div>
+        </div>
+      </div>
+
+      <section class="benefits">
+        <div>✧ Carefully Curated</div>
+        <div>♧ Quality Assured</div>
+        <div>♡ Made for Readers</div>
+        <div>⌁ Thoughtful Delivery</div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">EXPLORE BY INTEREST</p>
+            <h2>Find your kind of story.</h2>
+          </div>
+          <a href="#" onclick="showPage('shop')">View all categories →</a>
+        </div>
+
+        <div class="category-grid">
+          <div class="category-card cat-fiction" onclick="filterCategory('Fiction')">
+            <span>01</span><h3>Fiction</h3><p>Stories beyond imagination</p>
+          </div>
+          <div class="category-card cat-self" onclick="filterCategory('Self Help')">
+            <span>02</span><h3>Self Growth</h3><p>Become your best self</p>
+          </div>
+          <div class="category-card cat-business" onclick="filterCategory('Business')">
+            <span>03</span><h3>Business</h3><p>Ideas that move you forward</p>
+          </div>
+          <div class="category-card cat-romance" onclick="filterCategory('Romance')">
+            <span>04</span><h3>Romance</h3><p>Stories from the heart</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section featured-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">HANDPICKED FOR YOU</p>
+            <h2>Readers' favourites.</h2>
+          </div>
+          <a href="#" onclick="showPage('shop')">Shop all books →</a>
+        </div>
+        <div id="featuredProducts" class="product-grid"></div>
+      </section>
+
+      <section class="editorial">
+        <div>
+          <p class="eyebrow">THE BOOKNEST PROMISE</p>
+          <h2>More than books.<br><em>A feeling.</em></h2>
+          <p>We believe the right book, at the right time, can change everything. Discover thoughtfully selected reads for every chapter of life.</p>
+          <button class="light-btn" onclick="showPage('shop')">Discover more →</button>
+        </div>
+        <img src="https://images.unsplash.com/photo-1519682337058-a94d519337bc?w=900" alt="Reading and books">
+      </section>
+
+      <section class="newsletter">
+        <p class="eyebrow">LETTERS FROM BOOKNEST</p>
+        <h2>A little reading inspiration.</h2>
+        <p>Sign up for new arrivals, reading recommendations and exclusive offers.</p>
+        <form onsubmit="subscribe(event)">
+          <input id="newsletterEmail" type="email" placeholder="Your email address" required>
+          <button class="primary-btn">Subscribe →</button>
+        </form>
+        <small id="newsletterMessage"></small>
+      </section>
+    </section>
+
+    <section id="shopPage" class="page">
+      <div class="page-banner">
+        <p class="eyebrow">THE COLLECTION</p>
+        <h1>Explore the library.</h1>
+        <p>Find something wonderful to read.</p>
+      </div>
+
+      <div class="shop-layout">
+        <aside class="filters">
+          <h3>Categories</h3>
+          <button onclick="filterCategory('All')">All books</button>
+          <button onclick="filterCategory('Fiction')">Fiction</button>
+          <button onclick="filterCategory('Self Help')">Self Help</button>
+          <button onclick="filterCategory('Business')">Business</button>
+          <button onclick="filterCategory('Romance')">Romance</button>
+          <button onclick="filterCategory('Mythology')">Mythology</button>
+          <button onclick="filterCategory('Preloved')">Preloved</button>
+
+          <hr>
+          <h3>Price range</h3>
+          <select id="priceFilter" onchange="renderShop()">
+            <option value="all">All prices</option>
+            <option value="200">Under ₹200</option>
+            <option value="400">Under ₹400</option>
+            <option value="600">Under ₹600</option>
+          </select>
+
+          <hr>
+          <h3>Availability</h3>
+          <label><input type="checkbox" id="stockFilter" onchange="renderShop()"> In stock only</label>
+        </aside>
+
+        <div class="shop-main">
+          <div class="shop-toolbar">
+            <input id="searchInput" type="search" placeholder="Search by title or author..." oninput="renderShop()">
+            <select id="sortFilter" onchange="renderShop()">
+              <option value="default">Sort by: Featured</option>
+              <option value="low">Price: Low to High</option>
+              <option value="high">Price: High to Low</option>
+              <option value="name">Name: A to Z</option>
+            </select>
+          </div>
+          <p id="productCount" class="muted"></p>
+          <div id="shopProducts" class="product-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="productPage" class="page">
+      <div id="productDetails"></div>
+    </section>
+
+    <section id="wishlistPage" class="page">
+      <div class="page-banner">
+        <h1>Your wishlist.</h1>
+        <p>Books worth coming back to.</p>
+      </div>
+      <div id="wishlistProducts" class="product-grid section"></div>
+    </section>
+
+    <section id="cartPage" class="page">
+      <div class="page-banner">
+        <h1>Your reading bag.</h1>
+        <p>A good choice is waiting for you.</p>
+      </div>
+      <div id="cartContent" class="section"></div>
+    </section>
+
+    <section id="checkoutPage" class="page">
+      <div class="page-banner">
+        <h1>Almost yours.</h1>
+        <p>Complete your order.</p>
+      </div>
+      <div id="checkoutContent" class="section"></div>
+    </section>
+
+    <section id="accountPage" class="page">
+      <div class="page-banner"><h1>Your Booknest account.</h1></div>
+      <div id="accountContent" class="section"></div>
+    </section>
+
+    <section id="ordersPage" class="page">
+      <div class="page-banner"><h1>Your orders.</h1></div>
+      <div id="ordersContent" class="section"></div>
+    </section>
+
+    <section id="returnsPage" class="page">
+      <div class="page-banner"><h1>Returns & support.</h1></div>
+      <div id="returnsContent" class="section"></div>
+    </section>
+
+    <section id="adminLoginPage" class="page">
+      <div class="login-container">
+        <p class="eyebrow">BOOKNEST MANAGEMENT</p>
+        <h1>Welcome back.</h1>
+        <p>Sign in to your administration panel.</p>
+
+        <form id="adminLoginForm">
+          <label>Email address</label>
+          <input id="adminEmail" type="email" value="admin@booknest.demo" required>
+
+          <label>Password</label>
+          <input id="adminPassword" type="password" value="admin123" required>
+
+          <button class="primary-btn full-btn">Sign in to dashboard →</button>
+        </form>
+
+        <small>Demo credentials: admin@booknest.demo / admin123</small>
+        <p id="loginError" class="error"></p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="adminPanel" class="admin-panel hidden">
+    <aside class="admin-sidebar">
+      <div class="admin-brand">BOOK<span>NEST</span><small>ADMINISTRATION</small></div>
+
+      <div class="admin-profile">
+        <div class="avatar">BN</div>
+        <div><strong>Store Owner</strong><small>Administrator</small></div>
+      </div>
+
+      <p class="sidebar-label">OVERVIEW</p>
+      <button class="side-link active" onclick="adminTab('dashboard',this)">▦ Dashboard</button>
+      <button class="side-link" onclick="adminTab('analytics',this)">◷ Analytics</button>
+
+      <p class="sidebar-label">OPERATIONS</p>
+      <button class="side-link" onclick="adminTab('orders',this)">▤ Orders</button>
+      <button class="side-link" onclick="adminTab('products',this)">▣ Products</button>
+      <button class="side-link" onclick="adminTab('inventory',this)">▥ Inventory</button>
+      <button class="side-link" onclick="adminTab('customers',this)">♙ Customers</button>
+      <button class="side-link" onclick="adminTab('returns',this)">↩ Returns</button>
+      <button class="side-link" onclick="adminTab('shipping',this)">⌁ Shipping</button>
+
+      <p class="sidebar-label">BUSINESS</p>
+      <button class="side-link" onclick="adminTab('finance',this)">₹ Finance</button>
+      <button class="side-link" onclick="adminTab('marketing',this)">✧ Marketing</button>
+      <button class="side-link" onclick="adminTab('suppliers',this)">♧ Suppliers</button>
+      <button class="side-link" onclick="adminTab('employees',this)">♙ Employees</button>
+      <button class="side-link" onclick="adminTab('content',this)">▧ Website content</button>
+      <button class="side-link" onclick="adminTab('reports',this)">▤ Reports</button>
+
+      <div class="sidebar-bottom">
+        <button class="side-link" onclick="adminTab('settings',this)">⚙ Settings</button>
+        <button class="side-link logout-link" onclick="adminLogout()">↪ Exit admin</button>
+      </div>
+    </aside>
+
+    <section class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <button class="mobile-admin-menu" onclick="toggleAdminSidebar()">☰</button>
+          <span class="muted">BOOKNEST / ADMINISTRATION</span>
+        </div>
+        <div class="admin-top-actions">
+          <span id="adminDate"></span>
+          <button onclick="showPage('home')">View store ↗</button>
+        </div>
+      </header>
+
+      <div id="adminContent" class="admin-content"></div>
+    </section>
+  </div>
+
+  <footer id="storeFooter">
+    <div class="footer-grid">
+      <div>
+        <div class="logo footer-logo">BOOK<span>NEST</span></div>
+        <p>Stories worth sharing.<br>Books worth keeping.</p>
+      </div>
+
+      <div>
+        <h4>Discover</h4>
+        <a href="#" onclick="showPage('shop')">Shop all</a>
+        <a href="#" onclick="showPage('shop')">Categories</a>
+        <a href="#" onclick="filterCategory('Preloved')">Preloved books</a>
+      </div>
+
+      <div>
+        <h4>Customer care</h4>
+        <a href="#" onclick="showPage('orders')">Track orders</a>
+        <a href="#" onclick="showPage('returns')">Returns</a>
+        <a href="#" onclick="showPage('account')">My account</a>
+      </div>
+
+      <div>
+        <h4>Booknest</h4>
+        <a href="#" onclick="alert('Welcome to Booknest!')">About us</a>
+        <a href="#" onclick="alert('Contact: hello@booknest.demo')">Contact</a>
+        <a href="#" onclick="showPage('adminLogin')">Administration</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 BOOKNEST. All rights reserved.</span>
+      <span>Made for people who love stories.</span>
+      <span>Fictional project demonstration</span>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast"></div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
